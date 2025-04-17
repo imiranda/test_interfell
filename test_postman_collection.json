@@ -1,0 +1,272 @@
+{
+	"info": {
+		"_postman_id": "1a8645a2-59db-43af-b502-23bcde97535b",
+		"name": "test-interfell",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8335164"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200 && pm.response.json().token) {\r",
+							"    pm.collectionVariables.set(\"token\", pm.response.json().token);\r",
+							"    console.log(\"✅ Token guardado en variable 'token'\");\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"documento\": \"123456789\",\r\n  \"nombres\": \"Juan Pérez\",\r\n  \"email\": \"juan@mail.com\",\r\n  \"celular\": \"3011234567\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3002/api/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"api",
+						"register"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:3001/api/register \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"documento\": \"123456789\",\r\n  \"nombres\": \"Juan Pérez\",\r\n  \"email\": \"juan@mail.com\",\r\n  \"celular\": \"3011234567\"\r\n}'"
+			},
+			"response": []
+		},
+		{
+			"name": "Recarga Billetera",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"documento\": \"123456789\",\n  \"celular\": \"3011234567\",\n  \"valor\": 15000\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3002/api/wallet/deposit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"api",
+						"wallet",
+						"deposit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Iniciar Compra",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"documento\": \"123456789\",\n  \"celular\": \"3011234567\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3002/api/wallet/purchase",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"api",
+						"wallet",
+						"purchase"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Confirmar Compra",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"sessionId\": \"680064a7b198b8fd43397870\",\n  \"token\": \"373304\",\n  \"valor\": 5000\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3002/api/wallet/confirm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"api",
+						"wallet",
+						"confirm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar saldo",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3002/api/wallet/balance?documento=123456789&celular=3011234567",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"api",
+						"wallet",
+						"balance"
+					],
+					"query": [
+						{
+							"key": "documento",
+							"value": "123456789"
+						},
+						{
+							"key": "celular",
+							"value": "3011234567"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200 && pm.response.json().token) {\r",
+							"    pm.collectionVariables.set(\"token\", pm.response.json().token);\r",
+							"    console.log(\"✅ Token guardado en variable 'token'\");\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"documento\": \"123456789\",\r\n  \"celular\": \"3011234567\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3002/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudG8iOiIxMjM0NTY3ODkiLCJpYXQiOjE3NDQ4NjAwNTksImV4cCI6MTc0NDg2MzY1OX0.zNwa31wkyOPG8fJ87QuM-baUuEk-is5t8fnlRN0pPFU",
+			"type": "string"
+		}
+	]
+}
