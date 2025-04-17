@@ -1,0 +1,37 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: epayco-backend
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - mongo
+  
+  bff:
+    build:
+      context: ./bff
+    container_name: epayco-bff
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./bff:/app
+    env_file:
+      - ./bff/.env
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:6
+    container_name: epayco-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
